@@ -1,0 +1,35 @@
+<h1>Show Shop</h1>
+
+<ul>
+
+  <li>
+    <strong>Lat:</strong>
+    <%= @shop.lat %>
+  </li>
+
+  <li>
+    <strong>Lng:</strong>
+    <%= @shop.lng %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @shop.name %>
+  </li>
+
+  <li>
+    <strong>Info:</strong>
+    <%= @shop.info %>
+  </li>
+
+  <li>
+    <strong>Rank:</strong>
+    <%= @shop.rank %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.shop_path(@conn, :edit, @shop) %></span>
+<span><%= link "Back", to: Routes.shop_path(@conn, :index) %></span>
+<span><%= link "続けて入力", to: Routes.shop_path(@conn, :new) %></span>
+

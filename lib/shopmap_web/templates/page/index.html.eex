@@ -1,0 +1,39 @@
+<%
+results = Db.query("SELECT * FROM shops;") |> Db.getmap
+[ head | tail ] = results
+lat = Map.get(head, "lat" )
+lng = Map.get(head, "lng" )
+name = Map.get(head, "name")
+info = Map.get(head, "info")
+rank = Map.get(head, "rank")
+text = name <> info
+%>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+<style>
+  div#map{
+    width: 100%;
+    height: 500px;
+  }
+</style>
+
+<div id="map"></div>
+
+<script>
+var map = L.map('map').setView([<%= lat %>, <%= lng %>], 12);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+L.marker([<%= lat %>, <%= lng %>]).addTo(map)
+    .bindPopup('<%= text %> , Rank = <%= rank %>')
+    .openPopup();
+
+<%= for result <- results do %>
+L.marker([<%= Map.get(result, "lat" ) %>, <%= lng = Map.get(result, "lng" ) %>]).addTo(map)
+    .bindPopup('<%= Map.get(result, "name") %> ,お勧めは、<%= Map.get(result, "info") %>, Rank = <%= rank %>');
+<% end %>
+
+</script>
